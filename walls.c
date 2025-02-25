@@ -1,0 +1,105 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   walls.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/24 20:43:21 by hakarape          #+#    #+#             */
+/*   Updated: 2025/02/24 20:43:21 by hakarape         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub.h"
+
+static int check_one_and_space(char *str, char s,t_map *game)
+{
+    if (!s)
+        return (0); 
+    if (s != '1' && s != ' ')
+        double_error(str, game->cub, 1, game);
+    return (1);
+}
+void horizontal_wall(t_map *game)
+{
+    int j;
+    int i;
+
+    j = 0;
+    i = 0;
+    if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+        while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+            i++;
+    if (game->m_map[i])
+    {
+        while (game->m_map[i][j])
+        {
+            if (!check_one_and_space("ERROR\nHORIZONTAL WALL IS INVALID\n", game->m_map[i][j],game))
+            break;
+            j++;        
+        }
+    }
+    i = game->ind_row;
+        if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+            while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+                i--;
+        if (game->m_map[i])
+        { 
+            j = 0;
+            while (game->m_map[i][j])
+            {
+               if(!check_one_and_space("ERROR\nHORIZONTAL WALL IS INVALID\n", game->m_map[i][j],game))
+                    break;
+                j++;    
+            }
+        }
+}
+void vertical_wall(t_map *game)
+{
+    int i;
+
+    int j ;
+    j = 0;
+    i = 0;
+    if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+        while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+            i++;
+    if (game->m_map[i])
+    {   
+        while(game->m_map[i])
+        {
+            j = 0;
+            if(!are_spaces_in_empty_line(game->m_map[i]))
+            {
+                while (game->m_map[i][j] && game->m_map[i][j] == SPACE)
+                    j++;
+                if (game->m_map[i][j] && game->m_map[i][j] != '1')
+                double_error("ERROR\nVERTICAL WALL IS INVALID\n", game->cub, 1, game);
+            }
+            i++;
+        }
+    }
+    i=0;
+    j=0;
+    // if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+    //     while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+    //         i++;
+    if (game->m_map[i])
+    { 
+        while (game->m_map[i])
+        {
+           j = game->ind_columns;
+           if (game->m_map[i][j])
+           {
+                if (game->m_map[i][j] == SPACE)
+                {
+                    while (j >= 0 && game->m_map[i][j] && game->m_map[i][j] == SPACE)
+                        j--;
+                }
+                if (j >= 0 && game->m_map[i][j] && game->m_map[i][j] != '1')
+                    double_error("ERROR\nVERTICAL WALL IS INVALID\n", game->cub, 1, game);     
+           }
+            i++;
+        }
+    }   
+}
