@@ -44,15 +44,14 @@ int start_validation(t_map *game)
 			{
 				tex = is_there_texture(game->cub[i], game);
 				if (tex == 0)
-					// double_error("ERROR\nINVALID TEXTURE\n", game->cub, 1, game);
+					double_error("ERROR\nINVALID TEXTURE\n", game->cub, 1, game);
 				if (tex == 6)
 				{
 					i++;
 					if (game->cub[i])
 						game->m_map = &game->cub[i];
 					else
-						// double_error("ERROR\nINVALID TEXTURE\n", game->cub, 1, game);
-					//free_mem(&game->cub[i]);
+						double_error("ERROR\nINVALID TEXTURE\n", game->cub, 1, game);
 					return (0);	
 				}
 				i++;
@@ -60,6 +59,6 @@ int start_validation(t_map *game)
 		}
 	}
 	if (tex != 6)
-		// double_error("ERROR\nINVALID TEXTURE\n", game->cub, 0, game);
+		double_error("ERROR\nINVALID TEXTURE\n", game->cub, 0, game);
 	return(0);
 }

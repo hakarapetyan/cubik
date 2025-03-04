@@ -6,7 +6,7 @@
 /*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:42:58 by hakarape          #+#    #+#             */
-/*   Updated: 2025/02/25 16:56:57 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:42:05 by hakarape         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	is_there_texture(char *tex, t_map *game)
 	{
 		if(set_texture(&(game->texture.no), &ira))
 			get_texture(tex,&(game->texture.north), "NO", game);
+			// printf("hi\n");
 		else
 			return (0);
 		// ira++;
@@ -46,6 +47,7 @@ int	is_there_texture(char *tex, t_map *game)
 	{
 		if(set_texture(&(game->texture.so), &ira))
 			get_texture(tex, &(game->texture.south), "SO", game);
+		// printf("hi\n");
 		else
 			return (0);
 		// ira++;
@@ -55,6 +57,7 @@ int	is_there_texture(char *tex, t_map *game)
 	{
 		if(set_texture(&(game->texture.we), &ira))
 			get_texture(tex, &(game->texture.west), "WE", game);
+		// printf("hi\n");
 		else
 			return (0);
 		
@@ -65,6 +68,7 @@ int	is_there_texture(char *tex, t_map *game)
 	{
 		if(set_texture(&(game->texture.ea), &ira))
 			get_texture(tex, &(game->texture.east), "EA", game);	
+		// printf("hi\n");
 		else
 			return (0);
 		// ira++;
@@ -106,18 +110,19 @@ void floor_and_ceiling(char *str, t_map *game)
 	mat = ft_split(str, ',');
 	if (double_strlen(mat) != 3)
 	{
-		// free_mem(mat);
-		// double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
+		free_mem(mat);
+		double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
 	}
 	while (mat[i])
 	{
 		if (ft_atoi(mat[i]) < 0 || ft_atoi(mat[i]) > 255)
 			{
-				// free_mem(mat);
-				// double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
+				free_mem(mat);
+				double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
 			}
 		i++;	
 	}
+	free_mem(mat);
 }
 
 void get_texture(char *str, char **side, char *id, t_map *game)
@@ -129,22 +134,22 @@ void get_texture(char *str, char **side, char *id, t_map *game)
 	argv = ft_split(str, ' ');
 	if (!argv || double_strlen(argv) != 2)
 	{
-		//free_mem(argv);
-		//double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//argv free
+		free_mem(argv);
+		double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//argv free
 	}
 	if (argv[i])
 	{
 		if(ft_strcmp(argv[i], id) == 0)
 		{
-			if (*side) 
-				free(*side);
+			// if (*side) 
+			// 	free(*side);
 			*side = ft_strdup(argv[++i]);
-			//free_mem(argv);
+			free_mem(argv);
 		}
 		else
 		{
-			//free_mem(argv);
-			//ouble_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//argv free
+			free_mem(argv);
+			double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//argv free
 		}
 	}
 }

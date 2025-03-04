@@ -6,26 +6,26 @@
 /*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:36:23 by hakarape          #+#    #+#             */
-/*   Updated: 2025/02/25 16:58:42 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:43:02 by hakarape         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
-static void print_map(t_map *game)
-{
-	int i =0;
-	while(game->m_map[i])
-	{
-		// int j=0;
-		// while(game->m_map[i][j])
-		// {
-		// 	printf("%c",game->m_map[i][j]);
-		// 	j++;	
-		// }
-		printf("{%s}\n", game->m_map[i]);
-		i++;
-	}
-}
+// static void print_map(t_map *game)
+// {
+// 	int i =0;
+// 	while(game->m_map[i])
+// 	{
+// 		// int j=0;
+// 		// while(game->m_map[i][j])
+// 		// {
+// 		// 	printf("%c",game->m_map[i][j]);
+// 		// 	j++;	
+// 		// }
+// 		printf("{%s}\n", game->m_map[i]);
+// 		i++;
+// 	}
+// }
 void free_textures(t_map *game)
 {
     if (game->texture.no) free(game->texture.north);
@@ -47,9 +47,9 @@ static void open_read_init(int argc, int *fd, char **argv, t_map *game)
 }
 static void start_and_fill(t_map *game)
 {
-	// start_validation(game);
-	// the_last_column_ind(game);
-	// fill_null(game);
+	start_validation(game);
+	the_last_column_ind(game);
+	fill_null(game);
 }
 static void map_validation(t_map *game)
 {
@@ -65,8 +65,9 @@ int main(int argc, char **argv)
 	
 	open_read_init(argc, &fd, argv, &game);
 	start_and_fill(&game);
-	//map_validation(&game);
-	// free_textures(&game);
+	map_validation(&game);
+	free_textures(&game);
+	free_mem(game.cub);
 	//print_map(&game);
 	system("leaks cub3D");
 	close(fd);
