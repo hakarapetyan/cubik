@@ -6,7 +6,7 @@
 /*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:42:39 by hakarape          #+#    #+#             */
-/*   Updated: 2025/02/25 16:31:01 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:49:59 by hakarape         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ void fill_null(t_map *game)
             while (j < game->ind_columns)
             {
 				tmp = game->m_map[i];
-                game->m_map[i] = reallocation(game->m_map[i], game->ind_columns);
 				//free kartsum em
+                game->m_map[i] = reallocation(game->m_map[i], game->ind_columns);
 				free(tmp);
                 j++; 
             }

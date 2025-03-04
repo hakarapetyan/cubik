@@ -20,6 +20,34 @@ static int check_one_and_space(char *str, char s,t_map *game)
         double_error(str, game->cub, 1, game);
     return (1);
 }
+static void empty_line_spaces(t_map *game, int *i)
+{
+    if (game->m_map[*i] && are_spaces_in_empty_line(game->m_map[*i]))
+        while (game->m_map[*i] && are_spaces_in_empty_line(game->m_map[*i]))
+            (*i)++;
+
+}
+static void last_horizontal_wall(t_map *game)
+{
+	int	i;
+	int	j;
+
+    i = game->ind_row;
+	j = 0;
+    if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+        while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
+            i--;
+    if (game->m_map[i])
+    { 
+        j = 0;
+        while (game->m_map[i][j])
+        {
+           if(!check_one_and_space("ERROR\nHORIZONTAL WALL IS INVALID\n", game->m_map[i][j],game))
+                break;
+            j++;    
+        }
+    }
+}
 void horizontal_wall(t_map *game)
 {
     int j;
@@ -27,9 +55,7 @@ void horizontal_wall(t_map *game)
 
     j = 0;
     i = 0;
-    if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-        while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-            i++;
+	empty_line_spaces(game, &i);
     if (game->m_map[i])
     {
         while (game->m_map[i][j])
@@ -39,20 +65,7 @@ void horizontal_wall(t_map *game)
             j++;        
         }
     }
-    i = game->ind_row;
-        if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-            while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-                i--;
-        if (game->m_map[i])
-        { 
-            j = 0;
-            while (game->m_map[i][j])
-            {
-               if(!check_one_and_space("ERROR\nHORIZONTAL WALL IS INVALID\n", game->m_map[i][j],game))
-                    break;
-                j++;    
-            }
-        }
+	last_horizontal_wall(game);
 }
 void vertical_wall(t_map *game)
 {
@@ -61,9 +74,7 @@ void vertical_wall(t_map *game)
     int j ;
     j = 0;
     i = 0;
-    if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-        while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-            i++;
+    empty_line_spaces(game, &i);
     if (game->m_map[i])
     {   
         while(game->m_map[i])
@@ -81,9 +92,6 @@ void vertical_wall(t_map *game)
     }
     i=0;
     j=0;
-    // if (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-    //     while (game->m_map[i] && are_spaces_in_empty_line(game->m_map[i]))
-    //         i++;
     if (game->m_map[i])
     { 
         while (game->m_map[i])
