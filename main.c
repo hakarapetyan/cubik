@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:36:23 by hakarape          #+#    #+#             */
-/*   Updated: 2025/03/04 13:43:02 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:49:41 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 	free_textures(&game);
 	free_mem(game.cub);
 	//print_map(&game);
-	system("leaks cub3D");
+	//system("leaks cub3D");
 	close(fd);
 	return (0);
 }

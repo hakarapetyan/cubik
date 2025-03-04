@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texture_validation.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:42:58 by hakarape          #+#    #+#             */
-/*   Updated: 2025/03/04 13:42:05 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:09:01 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,50 +29,75 @@ static int set_texture(int *texture, int *st)
 	}
 		return (0);
 }
-int	is_there_texture(char *tex, t_map *game)
+// static int set_get_texture(t_map *game, char *tex, int tex_count, char *texture)
+// {
+// 	static int ira;
+	
+// 	if(set_texture(&tex_count, &ira))
+// 	{
+// 		get_texture(tex,&texture, "NO", game);
+// 		if (ft_strcmp(texture, game->texture.floor) == 0 || ft_strcmp(texture, game->texture.ceiling) == 0)
+// 			floor_and_ceiling(texture, game);	
+// 	}
+// 	else
+// 		return (0);
+// 	return (ira);
+// }
+// int	is_there_texture(char *tex, t_map *game)
+// {
+	// 	int res;
+	
+// 	res = 0;
+// 	if (!my_strnstr(tex, "NO", int_strlen(tex)) && !(res = set_get_texture(game, tex, game->texture.no, game->texture.north)))
+// 		return (0);
+// 	else if(!my_strnstr(tex, "SO", int_strlen(tex)) && !(res=set_get_texture(game, tex, game->texture.so, game->texture.south)))
+// 		return (0);
+// 	else if(!my_strnstr(tex, "WE", int_strlen(tex)) && !(res=set_get_texture(game, tex, game->texture.we, game->texture.west)))
+// 		return (0);
+// 	else if(!my_strnstr(tex, "EA", int_strlen(tex)) && !(res=set_get_texture(game, tex, game->texture.ea, game->texture.east)))
+// 			return (0);	
+// 	else if(!my_strnstr(tex, "F", int_strlen(tex)) && !(res=set_get_texture(game, tex, game->texture.f, game->texture.floor)))
+// 			return (0);
+// 	else if(!my_strnstr(tex, "C", int_strlen(tex)) && !(res=set_get_texture(game, tex, game->texture.c, game->texture.ceiling)))
+// 			return (0);
+// 	printf("res=%d\n", res);
+// 	return (res);
+// }
+static int helper(char *tex, t_map *game, int *ira)
 {
-	static int ira;
-	// printf("tex{%d}\n", game->texture.no);
 	if (!my_strnstr(tex, "NO", int_strlen(tex)))
 	{
-		if(set_texture(&(game->texture.no), &ira))
+		if(set_texture(&(game->texture.no), ira))
 			get_texture(tex,&(game->texture.north), "NO", game);
-			// printf("hi\n");
 		else
 			return (0);
-		// ira++;
-		// game->texture.no = 1;
 	}
 	else if(!my_strnstr(tex, "SO", int_strlen(tex)))
 	{
-		if(set_texture(&(game->texture.so), &ira))
+		if(set_texture(&(game->texture.so), ira))
 			get_texture(tex, &(game->texture.south), "SO", game);
-		// printf("hi\n");
 		else
 			return (0);
-		// ira++;
-		// game->texture.so = 1;
 	}
 	else if(!my_strnstr(tex, "WE", int_strlen(tex)))
 	{
-		if(set_texture(&(game->texture.we), &ira))
+		if(set_texture(&(game->texture.we), ira))
 			get_texture(tex, &(game->texture.west), "WE", game);
-		// printf("hi\n");
 		else
 			return (0);
-		
-		// ira++;
-		// game->texture.we = 1;
 	}
-	else if(!my_strnstr(tex, "EA", int_strlen(tex)))
+	return (1);
+}
+int	is_there_texture(char *tex, t_map *game)
+{
+	static int ira;
+	
+	if(!my_strnstr(tex, "EA", int_strlen(tex)))
 	{
 		if(set_texture(&(game->texture.ea), &ira))
 			get_texture(tex, &(game->texture.east), "EA", game);	
-		// printf("hi\n");
 		else
-			return (0);
-		// ira++;
-		// game->texture.ea = 1;	
+			return (0);	
 	}
 	else if(!my_strnstr(tex, "F", int_strlen(tex)))
 	{
@@ -82,9 +107,7 @@ int	is_there_texture(char *tex, t_map *game)
 			floor_and_ceiling(game->texture.floor, game);
 		}
 		else
-		return (0);
-		// ira++;
-		// game->texture.f = 1;	
+			return (0);
 	}
 	else if(!my_strnstr(tex, "C", int_strlen(tex)))
 	{
@@ -94,18 +117,18 @@ int	is_there_texture(char *tex, t_map *game)
 			floor_and_ceiling(game->texture.ceiling, game);
 		}
 		else
-		return (0);
-		// ira++;
-		// game->texture.c = 1;
+			return (0);
 	}
+	else if (!helper(tex, game, &ira))
+		return (0);
 	return (ira);
-}
+	}
 
 void floor_and_ceiling(char *str, t_map *game)
 {
 	int	i;
 	char **mat;
-
+	
 	i = 0;
 	mat = ft_split(str, ',');
 	if (double_strlen(mat) != 3)
@@ -141,8 +164,6 @@ void get_texture(char *str, char **side, char *id, t_map *game)
 	{
 		if(ft_strcmp(argv[i], id) == 0)
 		{
-			// if (*side) 
-			// 	free(*side);
 			*side = ft_strdup(argv[++i]);
 			free_mem(argv);
 		}

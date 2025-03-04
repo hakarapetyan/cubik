@@ -67,6 +67,32 @@ void horizontal_wall(t_map *game)
     }
 	last_horizontal_wall(game);
 }
+static void last_vertical_wall(t_map *game)
+{
+    int i;
+    int j;
+
+    i=0;
+    j=0;
+    if (game->m_map[i])
+    { 
+        while (game->m_map[i])
+        {
+           j = game->ind_columns;
+           if (game->m_map[i][j])
+           {
+                if (game->m_map[i][j] == SPACE)
+                {
+                    while (j >= 0 && game->m_map[i][j] && game->m_map[i][j] == SPACE)
+                        j--;
+                }
+                if (j >= 0 && game->m_map[i][j] && game->m_map[i][j] != '1')
+                    double_error("ERROR\nVERTICAL WALL IS INVALID\n", game->cub, 1, game);     
+           }
+            i++;
+        }
+    }   
+}
 void vertical_wall(t_map *game)
 {
     int i;
@@ -90,24 +116,5 @@ void vertical_wall(t_map *game)
             i++;
         }
     }
-    i=0;
-    j=0;
-    if (game->m_map[i])
-    { 
-        while (game->m_map[i])
-        {
-           j = game->ind_columns;
-           if (game->m_map[i][j])
-           {
-                if (game->m_map[i][j] == SPACE)
-                {
-                    while (j >= 0 && game->m_map[i][j] && game->m_map[i][j] == SPACE)
-                        j--;
-                }
-                if (j >= 0 && game->m_map[i][j] && game->m_map[i][j] != '1')
-                    double_error("ERROR\nVERTICAL WALL IS INVALID\n", game->cub, 1, game);     
-           }
-            i++;
-        }
-    }   
+    last_vertical_wall(game);
 }
