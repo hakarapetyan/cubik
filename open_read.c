@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:42:35 by hakarape          #+#    #+#             */
-/*   Updated: 2025/06/02 00:45:03 by marvin           ###   ########.fr       */
+/*   Updated: 2025/06/02 00:51:00 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ void before_split(char *line, t_map *game)
 	count = 0;
 	tmp = check_texture_in_line(line,&count, game);
 	if (tmp == NULL)
+	{
+		free(line);//avelacrats
 		double_error("ERROR\nINVALID TEXTURE\n", NULL, 1, game);
+	}
 	while ((tmp = check_texture_in_line(line,&count, game)) && count != 6)
 		;
 		len = the_last_char_of_map(tmp);
@@ -139,7 +142,7 @@ void before_split(char *line, t_map *game)
 			}
 			else
 			{
-				free(line);
+				free(line);//avelacrats
 				double_error("ERROR\nINVALID LIIIIIIINE\n", NULL, 1, game);
 			}
 		}		
