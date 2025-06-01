@@ -2,7 +2,7 @@ NAME = cub3D
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra  -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra  -g3 #-fsanitize=address
 
 SRCS = main.c\
 		open_read.c\

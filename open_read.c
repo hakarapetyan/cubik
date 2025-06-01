@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_read.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:42:35 by hakarape          #+#    #+#             */
-/*   Updated: 2025/02/25 15:40:35 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/06/02 00:45:03 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	map_read(int fd, t_map *game)
 	if (!game->cub)
 		ft_error("ERROR\nREADING MAP\n", line);
 	free(line);
+	line=NULL;
 	free(tmp);
 }
 static char *check_texture_in_line(char *tex, int *count, t_map *game)
@@ -87,7 +88,7 @@ static char *check_texture_in_line(char *tex, int *count, t_map *game)
 	}
 	return (NULL);
 }
-static int the_last_char_of_map(char *line)
+static long the_last_char_of_map(char *line)
 {
 	long	len;
 
@@ -103,7 +104,7 @@ void before_split(char *line, t_map *game)
 {
 	char *tmp;
 	int	i;
-	int len;
+	long len;
 	static int count;
 
 	i = 0;
@@ -114,10 +115,14 @@ void before_split(char *line, t_map *game)
 	while ((tmp = check_texture_in_line(line,&count, game)) && count != 6)
 		;
 		len = the_last_char_of_map(tmp);
+		if (len <= 0)
+			return ;//avelacvats
+		printf("tmp=%s\n", tmp);
 		while (tmp[i] && tmp[i] != '\n')
 			i++;
-		if (tmp[i + 1])
-		{
+			if (tmp[i + 1])
+			{
+			printf("tmp=%c\n", tmp[i+2]);
 			i++;
 			if (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\n'))
 
@@ -128,12 +133,15 @@ void before_split(char *line, t_map *game)
 				while (tmp[i] && i <= len)
 				{
 					if (tmp[i + 1] && tmp[i] == '\n' && tmp[i + 1] == '\n' && i<= len)
-						double_error("INVALID LINE\n", NULL, 1, game);
+						double_error("ERROR\nINVALID LINE\n", NULL, 1, game);
 					i++;
 				}
 			}
 			else
-				double_error("INVALID LIIIIIIINE\n", NULL, 1, game);
+			{
+				free(line);
+				double_error("ERROR\nINVALID LIIIIIIINE\n", NULL, 1, game);
+			}
 		}		
 }
 

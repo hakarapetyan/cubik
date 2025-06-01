@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   during_validation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 20:42:12 by hakarape          #+#    #+#             */
-/*   Updated: 2025/02/25 16:33:26 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:58:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,8 @@ int check_char_in_map(char *str, t_map *game)
 void	map_start(t_map *game)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	game->ind_row = double_strlen(game->m_map) - 1;
 	while (game->m_map[i] && !check_char_in_map(game->m_map[i], game))
 		i++;

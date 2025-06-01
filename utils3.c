@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:36:12 by hakarape          #+#    #+#             */
-/*   Updated: 2025/02/25 16:27:17 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/06/01 22:36:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ long	int_strlen(char *str)
 	long	i;
 
 	i = 0;
-	if (!str[i])
+	if (!str || !(*str))
 		return (0);
 	while (str[i])
 		i++;
@@ -49,10 +49,8 @@ void	ft_error(char *str, char *str1)
 void	double_error(char *str, char **split, int flag, t_map *game)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	if (str)
 		write(2, str, int_strlen(str));
 	if (str == NULL || split == NULL)
