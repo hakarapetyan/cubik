@@ -38,8 +38,13 @@ void	map_read(int fd, t_map *game)
 		if (!line)
 			ft_error("ERROR\nIT CAN NOT BE JOINED\n", line);
 	}
-	before_split(line, game);
 	game->cub = ft_split(line, '\n');
+	int i =0;
+	while(game->cub[i])
+	{
+		before_split(game->cub[i], game);
+		i++;
+	}
 	if (!game->cub)
 		ft_error("ERROR\nREADING MAP\n", line);
 	free(line);
@@ -56,31 +61,31 @@ static char *check_texture_in_line(char *tex, int *count, t_map *game)
 		(*count)++;
 		return (tmp);
 	}
-	if((tmp = ft_strnstr(tex, "SO", int_strlen(tex))) && game->texture.so != 1)
+	else if((tmp = ft_strnstr(tex, "SO", int_strlen(tex))) && game->texture.so != 1)
 	{
 		game->texture.so = 1;
 		(*count)++;
 		return (tmp);
 	}
-	if((tmp = ft_strnstr(tex, "WE", int_strlen(tex))) && game->texture.we != 1)
+	else if((tmp = ft_strnstr(tex, "WE", int_strlen(tex))) && game->texture.we != 1)
 	{
 		game->texture.we = 1;
 		(*count)++;
 		return (tmp);
 	}
-	if((tmp = ft_strnstr(tex, "EA", int_strlen(tex))) && game->texture.ea != 1)
+	else if((tmp = ft_strnstr(tex, "EA", int_strlen(tex))) && game->texture.ea != 1)
 	{
 		game->texture.ea = 1;
 		(*count)++;
 		return (tmp);
 	}
-	if((tmp = ft_strnstr(tex, "F", int_strlen(tex))) && game->texture.f != 1)
+	else if((tmp = ft_strnstr(tex, "F", int_strlen(tex))) && game->texture.f != 1)
 	{
 		game->texture.f = 1;
 		(*count)++;
 		return (tmp);
 	}
-	if((tmp = ft_strnstr(tex, "C", int_strlen(tex))) && game->texture.c != 1)
+	else if((tmp = ft_strnstr(tex, "C", int_strlen(tex))) && game->texture.c != 1)
 	{
 		game->texture.c = 1;
 		(*count)++;
@@ -109,42 +114,48 @@ void before_split(char *line, t_map *game)
 
 	i = 0;
 	count = 0;
-	tmp = check_texture_in_line(line,&count, game);
-	if (tmp == NULL)
-	{
-		free(line);//avelacrats
-		double_error("ERROR\nINVALID TEXTURE\n", NULL, 1, game);
-	}
+	// tmp = check_texture_in_line(line,&count, game);
+	// printf("===%s\n",tmp);
+	// if (tmp == NULL)
+	// {
+	// 	free(line);//avelacrats
+	// 	double_error("ERROR\nINVALID TEXTURE\n", NULL, 1, game);
+	// }
 	while ((tmp = check_texture_in_line(line,&count, game)) && count != 6)
 		;
 		len = the_last_char_of_map(tmp);
 		if (len <= 0)
 			return ;//avelacvats
-		printf("tmp=%s\n", tmp);
 		while (tmp[i] && tmp[i] != '\n')
+		{
 			i++;
+		}
 			if (tmp[i + 1])
 			{
-			printf("tmp=%c\n", tmp[i+2]);
-			i++;
-			if (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\n'))
-
-				while (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\n'))
-					i++;
-			if (tmp[i] && tmp[i] == '1' && tmp[i + 1] && i <= len)
-			{
-				while (tmp[i] && i <= len)
-				{
-					if (tmp[i + 1] && tmp[i] == '\n' && tmp[i + 1] == '\n' && i<= len)
-						double_error("ERROR\nINVALID LINE\n", NULL, 1, game);
-					i++;
-				}
+			 i++;
+			 if (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\n'))
+			 {
+				 while (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\n'))
+				 i++;
 			}
-			else
-			{
-				free(line);//avelacrats
-				double_error("ERROR\nINVALID LIIIIIIINE\n", NULL, 1, game);
-			}
+			 if (tmp[i] && tmp[i] == '1' && tmp[i + 1] && i <= len)
+			 {
+			 	while (tmp[i] && i <= len)
+			 	{
+			 		if (tmp[i + 1] && tmp[i] == '\n' && tmp[i + 1] == '\n' && i<= len)
+			 		{
+			 			free(line);//avelacrats
+			 			double_error("ERROR\nINVALID LINE\n", NULL, 1, game);
+			 		}
+			 			
+			 		i++;
+			 	}
+			 }
+			 else
+			 {
+			 	free(line);//avelacrats
+			 	double_error("ERROR\nINVALID LIIIIIIINE\n", NULL, 1, game);
+			 }
 		}		
 }
 

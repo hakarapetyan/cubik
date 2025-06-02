@@ -22,6 +22,12 @@ void	init_game(t_map *game)
 
 void	texture_init(t_map *game)
 {
+	game->texture.floor = NULL;
+	game->texture.ceiling = NULL;
+	game->texture.north = NULL;
+	game->texture.south = NULL;
+	game->texture.east = NULL;
+	game->texture.west = NULL;
 	game->texture.no = 0;
 	game->texture.so = 0;
 	game->texture.we = 0;

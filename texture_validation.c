@@ -131,18 +131,25 @@ void floor_and_ceiling(char *str, t_map *game)
 	
 	i = 0;
 	mat = ft_split(str, ',');
-	if (double_strlen(mat) != 3)
+	while(mat[i])
 	{
-		free_mem(mat);
-		double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
+		printf("mat=%s\n",mat[i]);
+		i++;
 	}
+	i=0;
+	// if (double_strlen(mat) != 3)
+	// {
+	// 	free_mem(mat);
+	// 	double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
+	// }
 	while (mat[i])
 	{
-		if (ft_atoi(mat[i]) < 0 || ft_atoi(mat[i]) > 255)
-			{
-				free_mem(mat);
-				double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
-			}
+		printf("mat=<%s>\n",mat[i]);
+		// if (ft_atoi(mat[i]) < 0 || ft_atoi(mat[i]) > 255)
+		// 	{
+		// 		free_mem(mat);
+		// 		double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//mat free
+		// 	}
 		i++;	
 	}
 	free_mem(mat);
@@ -158,7 +165,7 @@ void get_texture(char *str, char **side, char *id, t_map *game)
 	if (!argv || double_strlen(argv) != 2)
 	{
 		free_mem(argv);
-		double_error("ERROR\nMAP IS INVALID\n", game->cub, 1, game);//argv free
+		double_error("ERROR\nMAP IS INVALID1\n", game->cub, 1, game);//argv free
 	}
 	if (argv[i])
 	{
