@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakarape <hakarape@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:54:15 by hakarape          #+#    #+#             */
-/*   Updated: 2025/02/25 16:33:50 by hakarape         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:03:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	horizontal_wall(t_map *game);
 void	vertical_wall(t_map *game);
 void	check_map_symbols(t_map *game);
 // void	trim_map(t_map *game);
-void	before_split(char *line, t_map *game);
+void	before_split(char *line,int *count, t_map *game);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	the_last_column_ind(t_map *game);
 void	fill_null(t_map *game);

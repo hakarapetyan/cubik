@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:36:23 by hakarape          #+#    #+#             */
-/*   Updated: 2025/06/01 16:16:59 by marvin           ###   ########.fr       */
+/*   Updated: 2025/06/03 21:23:43 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int main(int argc, char **argv)
 	t_map	game;
 	
 	open_read_init(argc, &fd, argv, &game);
-	start_and_fill(&game);
-	map_validation(&game);
+	// start_and_fill(&game);
+	// map_validation(&game);
 	close(fd);
 	free_textures(&game);
 	free_mem(game.cub);

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:42:35 by hakarape          #+#    #+#             */
-/*   Updated: 2025/06/02 00:51:00 by marvin           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:01:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	map_read(int fd, t_map *game)
 {
 	char	*line;
 	char	*tmp;
+	char	*trim;
+	static int count;
 
+	count = 0;
 	line = get_next_line(fd);
 	if (!line)
 		ft_error("ERROR\nTERE IS NOTHING TO READ\n", line);
@@ -32,24 +35,47 @@ void	map_read(int fd, t_map *game)
 		tmp = get_next_line(fd);
 		if (!tmp)
 			break ;
+		//trim = ft_strtrim(tmp,"\n\t\v");
 		line = ft_strjoin(line, tmp);
 		free(tmp);
+		// free(trim);
 		game->ind_row++;
 		if (!line)
 			ft_error("ERROR\nIT CAN NOT BE JOINED\n", line);
 	}
+	printf("line=%s\n",line);
 	game->cub = ft_split(line, '\n');
 	int i =0;
-	while(game->cub[i])
-	{
-		before_split(game->cub[i], game);
-		i++;
-	}
 	if (!game->cub)
 		ft_error("ERROR\nREADING MAP\n", line);
+		
+	while(game->cub[i])
+	{
+		printf("game=%s\n",game->cub[i]);
+		before_split(game->cub[i],&count, game);
+		i++;
+	}
 	free(line);
 	line=NULL;
 	free(tmp);
+}
+static int	which_texture_is_passed(char *line)
+{
+	static int	count;
+
+	if (ft_strncmp(line, "NO", 2) == 0)
+		count++;
+	else if (ft_strncmp(line, "SO", 2) == 0)
+		count++;
+	else if (ft_strncmp(line, "EA", 2) == 0)
+		count++;
+	else if (ft_strncmp(line, "WE", 2) == 0)
+		count++;
+	else if (ft_strncmp(line, "F", 1) == 0)
+		count++;
+	else if (ft_strncmp(line, "C", 1) == 0)
+		count++;
+	return (count);
 }
 static char *check_texture_in_line(char *tex, int *count, t_map *game)
 {
@@ -91,7 +117,7 @@ static char *check_texture_in_line(char *tex, int *count, t_map *game)
 		(*count)++;
 		return (tmp);
 	}
-	return (NULL);
+			return (NULL);
 }
 static long the_last_char_of_map(char *line)
 {
@@ -105,57 +131,11 @@ static long the_last_char_of_map(char *line)
 	}
 	return (len);
 }
-void before_split(char *line, t_map *game)
+#include <ctype.h>
+void before_split(char *line,int *count, t_map *game)
 {
 	char *tmp;
 	int	i;
 	long len;
-	static int count;
-
-	i = 0;
-	count = 0;
-	// tmp = check_texture_in_line(line,&count, game);
-	// printf("===%s\n",tmp);
-	// if (tmp == NULL)
-	// {
-	// 	free(line);//avelacrats
-	// 	double_error("ERROR\nINVALID TEXTURE\n", NULL, 1, game);
-	// }
-	while ((tmp = check_texture_in_line(line,&count, game)) && count != 6)
-		;
-		len = the_last_char_of_map(tmp);
-		if (len <= 0)
-			return ;//avelacvats
-		while (tmp[i] && tmp[i] != '\n')
-		{
-			i++;
-		}
-			if (tmp[i + 1])
-			{
-			 i++;
-			 if (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\n'))
-			 {
-				 while (tmp[i] && (tmp[i] == ' ' || tmp[i] == '\n'))
-				 i++;
-			}
-			 if (tmp[i] && tmp[i] == '1' && tmp[i + 1] && i <= len)
-			 {
-			 	while (tmp[i] && i <= len)
-			 	{
-			 		if (tmp[i + 1] && tmp[i] == '\n' && tmp[i + 1] == '\n' && i<= len)
-			 		{
-			 			free(line);//avelacrats
-			 			double_error("ERROR\nINVALID LINE\n", NULL, 1, game);
-			 		}
-			 			
-			 		i++;
-			 	}
-			 }
-			 else
-			 {
-			 	free(line);//avelacrats
-			 	double_error("ERROR\nINVALID LIIIIIIINE\n", NULL, 1, game);
-			 }
-		}		
 }
 
